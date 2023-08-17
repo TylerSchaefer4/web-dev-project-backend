@@ -1,0 +1,35 @@
+{
+  "name": "web-dev-project-backend",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Node.js HTTP Web server for our Web Dev project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TylerSchaefer4/web-dev-project-backend.git"
+  },
+  "keywords": [
+    "Node",
+    "REST",
+    "Server",
+    "HTTP"
+  ],
+  "author": "Tyler Schaefer and Victor Sunderland",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TylerSchaefer4/web-dev-project-backend/issues"
+  },
+  "homepage": "https://github.com/TylerSchaefer4/web-dev-project-backend#readme",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mongoose": "^7.4.3"
+  }
+}
