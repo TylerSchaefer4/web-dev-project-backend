@@ -26,9 +26,32 @@ const deletePost = async (req, res) => {
   res.json(status);
 };
 
+const addCommentToPost = async (req, res) => {
+  const postId = req.params.pid;
+  const newComment = req.body;
+  const status = await postsDao.addCommentToPost(postId, newComment);
+  res.json(status);
+};
+
+const deleteCommentFromPost = async (req, res) => {
+  const postId = req.params.pid;
+  const commentId = req.params.cid;
+  const status = await postsDao.deleteCommentFromPost(postId, commentId);
+  res.json(status);
+};
+
+const findCommentsByPost = async (req, res) => {
+  const postId = req.params.pid;
+  const comments = await postsDao.findCommentsByPost(postId);
+  res.json(comments);
+};
+
 export default (app) => {
   app.post("/api/posts", createPost);
   app.get("/api/posts", findPosts);
   app.put("/api/posts/:pid", updatePost);
   app.delete("/api/posts/:pid", deletePost);
+  app.post("/api/posts/:pid/comments", addCommentToPost);
+  app.delete("/api/posts/:pid/comments/:cid", deleteCommentFromPost);
+  app.get("/api/posts/:pid/comments", findCommentsByPost);
 };
