@@ -45,9 +45,15 @@ const findCommentsByPost = async (req, res) => {
   const comments = await postsDao.findCommentsByPost(postId);
   res.json(comments);
 };
+const findPostById = async (req, res) => {
+  const postId = req.params.pid;
+  const post = await postsDao.findPostById(postId);
+  res.json(post);
+};
 
 export default (app) => {
   app.post("/api/posts", createPost);
+  app.get("/api/posts/:pid", findPostById);
   app.get("/api/posts", findPosts);
   app.put("/api/posts/:pid", updatePost);
   app.delete("/api/posts/:pid", deletePost);
