@@ -29,6 +29,10 @@ const postSchema = new mongoose.Schema(
       default: false,
     },
     image: String,
+    votes: {
+      type: Number,
+      default: 0,
+    },
     title: String,
     topic: String,
     userName: String,

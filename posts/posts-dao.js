@@ -16,3 +16,9 @@ export const deleteCommentFromPost = (pid, commentId) =>
 
 export const findCommentsByPost = (pid) =>
   postsModel.findById(pid).then((post) => post.comments);
+export const findPostsBySearchQuery = (searchQuery) => {
+  const regex = new RegExp(searchQuery.split(" ").join("|"), "i");
+  return postsModel.find({
+    $or: [{ title: { $regex: regex } }, { post: { $regex: regex } }],
+  });
+};

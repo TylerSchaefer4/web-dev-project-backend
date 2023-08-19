@@ -6,6 +6,7 @@ const createPost = async (req, res) => {
   newPost.liked = false;
   newPost.handle = req.body.handle;
   newPost.username = req.body.username;
+  newPost.votes = 0;
   const insertedTuit = await postsDao.createPost(newPost);
   res.json(insertedTuit);
 };
@@ -51,7 +52,19 @@ const findPostById = async (req, res) => {
   res.json(post);
 };
 
+const findPostsBySearchQuery = async (req, res) => {
+  const searchQuery = req.query.searchQuery;
+  try {
+    const posts = await postsDao.findPostsBySearchQuery(searchQuery);
+    res.json(posts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error retrieving posts by search query");
+  }
+};
+
 export default (app) => {
+  app.get("/api/posts/search", findPostsBySearchQuery);
   app.post("/api/posts", createPost);
   app.get("/api/posts/:pid", findPostById);
   app.get("/api/posts", findPosts);
