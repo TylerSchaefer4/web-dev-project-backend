@@ -6,6 +6,8 @@ const usersSchema = new mongoose.Schema(
     firstName: String,
     lastName: String,
     type: { type: String, enum: ["PREMIUM", "REGULAR"], default: "REGULAR" },
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Users" }],
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: "Users" }],
   },
   { collection: "users" }
 );
