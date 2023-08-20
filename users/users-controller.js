@@ -5,6 +5,10 @@ const UserController = (app) => {
   app.post("/api/users", createUser);
   app.delete("/api/users/:uid", deleteUser);
   app.put("/api/users/:uid", updateUser);
+  app.post("/api/users/:uid/follow", followUser);
+  app.post("/api/users/:uid/unfollow", unfollowUser);
+  app.get("/api/users/:uid/followers", getFollowers);
+  app.get("/api/users/:uid/following", getFollowing);
 };
 const findUsers = (req, res) => {
   const type = req.query.type;
@@ -60,6 +64,39 @@ const updateUser = async (req, res) => {
   const user = await usersDao.findUserById(id);
   req.session["currentUser"] = user;
   res.json(status);
+};
+
+const followUser = async (req, res) => {
+  const userId = req.session["currentUser"]._id;
+  const userToFollowId = req.params["uid"];
+
+  const updatedUser = await usersDao.followUser(userId, userToFollowId);
+  await usersDao.addFollower(userToFollowId, userId);
+
+  req.session["currentUser"] = updatedUser;
+  res.json(updatedUser);
+};
+
+const unfollowUser = async (req, res) => {
+  const userId = req.session["currentUser"]._id;
+  const userToUnfollowId = req.params["uid"];
+
+  const updatedUser = await usersDao.unfollowUser(userId, userToUnfollowId);
+  await usersDao.removeFollower(userToUnfollowId, userId);
+
+  req.session["currentUser"] = updatedUser;
+  res.json(updatedUser);
+};
+const getFollowers = async (req, res) => {
+  const userId = req.params["uid"];
+  const followers = await usersDao.findFollowersByUserId(userId);
+  res.json(followers);
+};
+
+const getFollowing = async (req, res) => {
+  const userId = req.params["uid"];
+  const following = await usersDao.findFollowingByUserId(userId);
+  res.json(following);
 };
 
 export default UserController;
