@@ -35,7 +35,8 @@ const postSchema = new mongoose.Schema(
     },
     title: String,
     topic: String,
-    userName: String,
+    username: String,
+    handle: String,
     timestamp: {
       type: Date,
       default: Date.now,
