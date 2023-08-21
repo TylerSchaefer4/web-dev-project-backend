@@ -31,7 +31,7 @@ const addCommentToPost = async (req, res) => {
   const postId = req.params.pid;
   const newComment = req.body;
   const status = await postsDao.addCommentToPost(postId, newComment);
-  res.json(status);
+  res.json(newComment);
 };
 
 const deleteCommentFromPost = async (req, res) => {
